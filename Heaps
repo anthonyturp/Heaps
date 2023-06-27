@@ -1,1 +1,81 @@
-gg
+public class Monticulo {
+	private int heap_size;
+	
+	
+	/**
+	 * @pre: A es un arreglo en la que la los hijos de la raiz son monticulos.
+	 * @pos: Convierte a A en un monticulo.
+	 * @param A
+	 * @param i
+	 */
+	
+	
+	public void Max_Heapify (double []A, int i){
+		int l = Left(i);
+		int r = Right(i);
+		int largest;
+		if (l<= heap_size && A[l]>A[i]){
+			largest=l;
+		}
+		else {
+			largest=i;
+		}
+		if (r<= heap_size && A[r]>A[largest]){
+			largest=r;
+		}
+		if (largest!=i){
+			double temp = A[i];
+			double temp2=A[largest];
+			A[i]= temp2;
+			A[largest]=temp;
+			Max_Heapify(A,largest);
+		}
+	}
+	
+	public void Build_Max_Heap (double []A){
+		heap_size = A.length-2;
+		for (int i = (A.length-1)/2; i >=0; i--) {
+			Max_Heapify(A, i);
+		}
+		
+		
+	}
+	
+	public void Heap_Sort (double []A){
+		Build_Max_Heap(A);
+		for (int i = A.length-1; i >1; i--) {
+			double temp = A[0];
+			double temp2=A[i];
+			A[i]=temp;
+			A[0]=temp2;
+			heap_size=heap_size-1;
+			Max_Heapify(A, 0);
+		}
+	}
+	
+	public int Parent (int i) {
+		return i/2;
+	}
+	
+	public int Left (int i) {
+		return 2*i;
+	}
+	
+	public int Right (int i) {
+		return 2*i+1;
+	}
+	
+	
+	public static void main(String[] args) {
+		
+		double []a = {16,14,10,8,7,9,3,2,4,1};
+		Monticulo b = new Monticulo();
+		b.Heap_Sort(a);
+		String z = "[";
+		for (int i = 0; i < a.length; i++) {
+			z+= a[i]+" , ";
+		}
+		System.out.println(z);
+	}
+
+}
